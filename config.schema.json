@@ -1,0 +1,393 @@
+{
+  "pluginAlias": "Lookin HTTP AC",
+  "pluginType": "platform",
+  "singular": true,
+  "strictValidation": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "devices": {
+        "type": "array",
+        "title": "devices",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "required": true,
+              "default": "My AC"
+            },
+            "ip": {
+              "title": "IP",
+              "type": "string",
+              "required": true,
+              "default": "127.0.0.1"
+            },
+            "off": {
+              "title": "IR off",
+              "type": "string",
+              "required": true
+            },
+            "irMap": {
+              "title": "IR Map",
+              "type": "object",
+              "required": true,
+              "properties": {
+                "low": {
+                  "title": "Low flow",
+                  "required": true,
+                  "type": "object",
+                  "properties": {
+                    "cool": {
+                      "title": "Cooling",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    },
+                    "heat": {
+                      "title": "Heating",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "medium": {
+                  "title": "Medium flow",
+                  "type": "object",
+                  "required": true,
+                  "properties": {
+                    "cool": {
+                      "title": "Cooling",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    },
+                    "heat": {
+                      "title": "Heating",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "high": {
+                  "title": "High flow",
+                  "type": "object",
+                  "required": true,
+                  "properties": {
+                    "cool": {
+                      "title": "Cooling",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    },
+                    "heat": {
+                      "title": "Heating",
+                      "type": "object",
+                      "required": true,
+                      "properties": {
+                        "t16": { "title": "16", "type": "string", "required": true },
+                        "t17": { "title": "17", "type": "string", "required": true },
+                        "t18": { "title": "18", "type": "string", "required": true },
+                        "t19": { "title": "19", "type": "string", "required": true },
+                        "t20": { "title": "20", "type": "string", "required": true },
+                        "t21": { "title": "21", "type": "string", "required": true },
+                        "t22": { "title": "22", "type": "string", "required": true },
+                        "t23": { "title": "23", "type": "string", "required": true },
+                        "t24": { "title": "24", "type": "string", "required": true },
+                        "t25": { "title": "25", "type": "string", "required": true },
+                        "t26": { "title": "26", "type": "string", "required": true },
+                        "t27": { "title": "27", "type": "string", "required": true },
+                        "t28": { "title": "28", "type": "string", "required": true },
+                        "t29": { "title": "29", "type": "string", "required": true },
+                        "t30": { "title": "30", "type": "string", "required": true }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "layout": [
+    {
+      "type": "tabarray",
+      "key": "devices",
+      "title": "{{ value.name || 'New device' }}",
+      "description": "Configure AC devices and their IR mappings.",
+
+      "items": [
+            "devices[].name",
+            "devices[].ip",
+            "devices[].off",
+            {
+              "type": "fieldset",
+              "title": "IR Map",
+              "key": "devices[].irMap",
+              "description": "Map fan speed, mode, and temperature to IR strings.",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "fieldset",
+                  "title": "Low Speed",
+                  "expandable": true,
+                  "expanded": false,
+                  "items": [
+                    {
+                      "type": "fieldset",
+                      "title": "Cooling",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.low.cool.t16",
+                        "devices[].irMap.low.cool.t17",
+                        "devices[].irMap.low.cool.t18",
+                        "devices[].irMap.low.cool.t19",
+                        "devices[].irMap.low.cool.t20",
+                        "devices[].irMap.low.cool.t21",
+                        "devices[].irMap.low.cool.t22",
+                        "devices[].irMap.low.cool.t23",
+                        "devices[].irMap.low.cool.t24",
+                        "devices[].irMap.low.cool.t25",
+                        "devices[].irMap.low.cool.t26",
+                        "devices[].irMap.low.cool.t27",
+                        "devices[].irMap.low.cool.t28",
+                        "devices[].irMap.low.cool.t29",
+                        "devices[].irMap.low.cool.t30"
+                      ]
+                    },
+                    {
+                      "type": "fieldset",
+                      "title": "Heating",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.low.heat.t16",
+                        "devices[].irMap.low.heat.t17",
+                        "devices[].irMap.low.heat.t18",
+                        "devices[].irMap.low.heat.t19",
+                        "devices[].irMap.low.heat.t20",
+                        "devices[].irMap.low.heat.t21",
+                        "devices[].irMap.low.heat.t22",
+                        "devices[].irMap.low.heat.t23",
+                        "devices[].irMap.low.heat.t24",
+                        "devices[].irMap.low.heat.t25",
+                        "devices[].irMap.low.heat.t26",
+                        "devices[].irMap.low.heat.t27",
+                        "devices[].irMap.low.heat.t28",
+                        "devices[].irMap.low.heat.t29",
+                        "devices[].irMap.low.heat.t30"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldset",
+                  "title": "Medium Speed",
+                  "expandable": true,
+                  "expanded": false,
+                  "items": [
+                    {
+                      "type": "fieldset",
+                      "title": "Cooling",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.medium.cool.t16",
+                        "devices[].irMap.medium.cool.t17",
+                        "devices[].irMap.medium.cool.t18",
+                        "devices[].irMap.medium.cool.t19",
+                        "devices[].irMap.medium.cool.t20",
+                        "devices[].irMap.medium.cool.t21",
+                        "devices[].irMap.medium.cool.t22",
+                        "devices[].irMap.medium.cool.t23",
+                        "devices[].irMap.medium.cool.t24",
+                        "devices[].irMap.medium.cool.t25",
+                        "devices[].irMap.medium.cool.t26",
+                        "devices[].irMap.medium.cool.t27",
+                        "devices[].irMap.medium.cool.t28",
+                        "devices[].irMap.medium.cool.t29",
+                        "devices[].irMap.medium.cool.t30"
+                      ]
+                    },
+                    {
+                      "type": "fieldset",
+                      "title": "Heating",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.medium.heat.t16",
+                        "devices[].irMap.medium.heat.t17",
+                        "devices[].irMap.medium.heat.t18",
+                        "devices[].irMap.medium.heat.t19",
+                        "devices[].irMap.medium.heat.t20",
+                        "devices[].irMap.medium.heat.t21",
+                        "devices[].irMap.medium.heat.t22",
+                        "devices[].irMap.medium.heat.t23",
+                        "devices[].irMap.medium.heat.t24",
+                        "devices[].irMap.medium.heat.t25",
+                        "devices[].irMap.medium.heat.t26",
+                        "devices[].irMap.medium.heat.t27",
+                        "devices[].irMap.medium.heat.t28",
+                        "devices[].irMap.medium.heat.t29",
+                        "devices[].irMap.medium.heat.t30"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldset",
+                  "title": "High Speed",
+                  "expandable": true,
+                  "expanded": false,
+                  "items": [
+                    {
+                      "type": "fieldset",
+                      "title": "Cooling",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.high.cool.t16",
+                        "devices[].irMap.high.cool.t17",
+                        "devices[].irMap.high.cool.t18",
+                        "devices[].irMap.high.cool.t19",
+                        "devices[].irMap.high.cool.t20",
+                        "devices[].irMap.high.cool.t21",
+                        "devices[].irMap.high.cool.t22",
+                        "devices[].irMap.high.cool.t23",
+                        "devices[].irMap.high.cool.t24",
+                        "devices[].irMap.high.cool.t25",
+                        "devices[].irMap.high.cool.t26",
+                        "devices[].irMap.high.cool.t27",
+                        "devices[].irMap.high.cool.t28",
+                        "devices[].irMap.high.cool.t29",
+                        "devices[].irMap.high.cool.t30"
+                      ]
+                    },
+                    {
+                      "type": "fieldset",
+                      "title": "Heating",
+                      "expandable": true,
+                      "expanded": false,
+                      "items": [
+                        "devices[].irMap.high.heat.t16",
+                        "devices[].irMap.high.heat.t17",
+                        "devices[].irMap.high.heat.t18",
+                        "devices[].irMap.high.heat.t19",
+                        "devices[].irMap.high.heat.t20",
+                        "devices[].irMap.high.heat.t21",
+                        "devices[].irMap.high.heat.t22",
+                        "devices[].irMap.high.heat.t23",
+                        "devices[].irMap.high.heat.t24",
+                        "devices[].irMap.high.heat.t25",
+                        "devices[].irMap.high.heat.t26",
+                        "devices[].irMap.high.heat.t27",
+                        "devices[].irMap.high.heat.t28",
+                        "devices[].irMap.high.heat.t29",
+                        "devices[].irMap.high.heat.t30"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+      ]
+    }
+  ]
+}
