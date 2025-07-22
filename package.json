@@ -2,17 +2,17 @@
   "name": "homebridge-lookin-http-ac",
   "displayName": "Lookin HTTP AC",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "author": "psx",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/USERNAME/GITHUB_PROJECT_NAME",
+  "homepage": "https://github.com/aleksandrzhukovskii/homebridge-lookin-http-ac",
   "repository": {
     "type": "git",
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
+    "url": "https://github.com/aleksandrzhukovskii/homebridge-lookin-http-ac.git"
   },
   "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "https://github.com/aleksandrzhukovskii/homebridge-lookin-http-ac/issues"
   },
   "keywords": [
     "homebridge-plugin", "lookin", "http", "ac"

@@ -42,6 +42,7 @@ export class AccessoryAC {
 
     this.heaterCooler = accessory.getService(Service.HeaterCooler)
         ?? accessory.addService(Service.HeaterCooler, accessory.displayName);
+    this.heaterCooler.setPrimaryService(true);
     this.heaterCooler.updateCharacteristic(Characteristic.TargetHeaterCoolerState, this.acState.mode);
     this.heaterCooler.updateCharacteristic(Characteristic.CoolingThresholdTemperature, this.acState.coldTemperature);
     this.heaterCooler.updateCharacteristic(Characteristic.HeatingThresholdTemperature, this.acState.heatTemperature);
