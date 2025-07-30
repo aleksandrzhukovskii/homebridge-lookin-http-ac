@@ -6,6 +6,8 @@ export class AccessoryAC {
   private acState;
   private heaterCooler;
   private fan;
+  private debounceTimer: NodeJS.Timeout | null = null;
+  private pendingCommand: string | null = null;
 
   constructor(
       private readonly platform: Platform,
@@ -98,14 +100,15 @@ export class AccessoryAC {
     }
     this.acState.activeHeaterCooler = value as number;
     this.platform.log.debug(`[${this.accessory.displayName}] Set Active Heater -> ${value as number}`);
-    if ((this.acState.activeFan?1:0)!==this.acState.activeHeaterCooler){
-      await this.sendAcCommand();
-    }
+    await this.sendAcCommand();
     this.fan.updateCharacteristic(Characteristic.On, value===1);
     await this.setOn(value===1);
   }
 
   async setMode(value: CharacteristicValue) {
+    if (this.acState.mode===value){
+      return;
+    }
     this.acState.mode = value as number;
     this.platform.log.debug(`[${this.accessory.displayName}] Set Mode -> ${value === 1 ? 'HEAT' : 'COOL'}`);
     await this.sendAcCommand();
@@ -113,6 +116,9 @@ export class AccessoryAC {
 
   async setColdTemperature(value: CharacteristicValue) {
     const val = value as number;
+    if (this.acState.coldTemperature===val){
+      return;
+    }
     this.acState.coldTemperature = val>=16?val:16;
     this.platform.log.debug(`[${this.accessory.displayName}] Set Cold Temperature -> ${val}`);
     if (this.acState.activeHeaterCooler===1 && this.acState.mode===this.platform.Characteristic.TargetHeaterCoolerState.COOL){
@@ -122,6 +128,9 @@ export class AccessoryAC {
 
   async setHeatTemperature(value: CharacteristicValue) {
     const val = value as number;
+    if (this.acState.heatTemperature===val){
+      return;
+    }
     this.acState.heatTemperature = val>=16?val:16;
     this.platform.log.debug(`[${this.accessory.displayName}] Set Heat Temperature -> ${val}`);
     if (this.acState.activeHeaterCooler===1 && this.acState.mode===this.platform.Characteristic.TargetHeaterCoolerState.HEAT){
@@ -168,9 +177,6 @@ export class AccessoryAC {
     }
     this.acState.activeFan = value as boolean;
     this.platform.log.debug(`[${this.accessory.displayName}] Set Active Fan -> ${value as boolean}`);
-    if ((this.acState.activeFan?1:0)!==this.acState.activeHeaterCooler){
-      await this.sendAcCommand();
-    }
     this.heaterCooler.updateCharacteristic(Characteristic.Active, value?1:0);
     await this.setActive(value?1:0);
   }
@@ -194,6 +200,19 @@ export class AccessoryAC {
       code=this.off;
     }
 
+    this.pendingCommand = code;
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+    this.debounceTimer = setTimeout(() => {
+      if (this.pendingCommand) {
+        this.performSend(this.pendingCommand);
+        this.pendingCommand = null;
+      }
+    }, 500);
+  }
+
+  private async performSend(code: string): Promise<void> {
     const url = `http://${this.ip}/commands/ir/prontohex/${code}`;
     this.platform.log.debug(`[${this.accessory.displayName}] Sending IR code: ${url}`);
 
