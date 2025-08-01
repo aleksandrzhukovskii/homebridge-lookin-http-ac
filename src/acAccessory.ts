@@ -16,8 +16,11 @@ export class AccessoryAC {
       poller: SensorPoller,
       private readonly irMap: Record<'low' | 'medium' | 'high', Record<'cool' | 'heat', Record<string, string>>>,
       private readonly off: string,
+      private readonly debug: boolean,
   ) {
-    this.platform.log.debug(JSON.stringify(irMap, null, 4));
+    if (this.debug) {
+      this.platform.log.warn(JSON.stringify(irMap, null, 4));
+    }
 
     const { Service, Characteristic } = this.platform;
     this.acState = {
@@ -29,18 +32,6 @@ export class AccessoryAC {
       fanSpeedFan: 2, // 1=Low, 2=Medium, 3=High
       fanSpeedHeaterCooler: 2, // 1=Low, 2=Medium, 3=High
     };
-
-    this.fan = accessory.getService(Service.Fan)
-        ?? accessory.addService(Service.Fan, accessory.displayName+' Fan');
-    this.fan.updateCharacteristic(Characteristic.RotationSpeed, this.acState.fanSpeedFan);
-    this.fan.getCharacteristic(Characteristic.On).onGet(async() => this.acState.activeFan).
-      onSet(this.setOn.bind(this));
-    this.fan.getCharacteristic(Characteristic.RotationSpeed)
-      .setProps({
-        minValue: 0,
-        maxValue: 3,
-        minStep: 1,
-      }).onGet(() => this.acState.fanSpeedFan).onSet(this.setFanSpeed.bind(this));
 
     this.heaterCooler = accessory.getService(Service.HeaterCooler)
         ?? accessory.addService(Service.HeaterCooler, accessory.displayName);
@@ -77,6 +68,15 @@ export class AccessoryAC {
         minStep: 1,
       }).onGet(() => this.acState.fanSpeedHeaterCooler).onSet(this.setHeaterCoolerSpeed.bind(this));
 
+    this.fan = accessory.getService(Service.Fan)
+        ?? accessory.addService(Service.Fan, accessory.displayName+' Fan');
+    this.fan.updateCharacteristic(Characteristic.RotationSpeed, this.acState.fanSpeedFan);
+    this.fan.getCharacteristic(Characteristic.On).onGet(async() => this.acState.activeFan).
+      onSet(this.setOn.bind(this));
+    this.fan.getCharacteristic(Characteristic.RotationSpeed)
+      .setProps({ minValue: 0, maxValue: 3, minStep: 1 })
+      .onGet(() => this.acState.fanSpeedFan).onSet(this.setFanSpeed.bind(this));
+
     poller.on('update', () => {
       this.heaterCooler.updateCharacteristic(Characteristic.CurrentTemperature, poller.temperature);
     });
@@ -99,7 +99,9 @@ export class AccessoryAC {
       return;
     }
     this.acState.activeHeaterCooler = value as number;
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Active Heater -> ${value as number}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Active Heater -> ${value as number}`);
+    }
     await this.sendAcCommand();
     this.fan.updateCharacteristic(Characteristic.On, value===1);
     await this.setOn(value===1);
@@ -110,7 +112,9 @@ export class AccessoryAC {
       return;
     }
     this.acState.mode = value as number;
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Mode -> ${value === 1 ? 'HEAT' : 'COOL'}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Mode -> ${value === 1 ? 'HEAT' : 'COOL'}`);
+    }
     await this.sendAcCommand();
   }
 
@@ -120,7 +124,9 @@ export class AccessoryAC {
       return;
     }
     this.acState.coldTemperature = val>=16?val:16;
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Cold Temperature -> ${val}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Cold Temperature -> ${val}`);
+    }
     if (this.acState.activeHeaterCooler===1 && this.acState.mode===this.platform.Characteristic.TargetHeaterCoolerState.COOL){
       await this.sendAcCommand();
     }
@@ -132,7 +138,9 @@ export class AccessoryAC {
       return;
     }
     this.acState.heatTemperature = val>=16?val:16;
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Heat Temperature -> ${val}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Heat Temperature -> ${val}`);
+    }
     if (this.acState.activeHeaterCooler===1 && this.acState.mode===this.platform.Characteristic.TargetHeaterCoolerState.HEAT){
       await this.sendAcCommand();
     }
@@ -145,7 +153,9 @@ export class AccessoryAC {
     }
     this.acState.fanSpeedFan = value as number;
     const speedLabel = ['Low', 'Medium', 'High'][this.acState.fanSpeedFan-1];
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Fan Speed Fan -> ${speedLabel}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Fan Speed Fan -> ${speedLabel}`);
+    }
 
     if (this.acState.fanSpeedFan!==this.acState.fanSpeedHeaterCooler){
       await this.sendAcCommand();
@@ -161,7 +171,9 @@ export class AccessoryAC {
     }
     this.acState.fanSpeedHeaterCooler = value as number;
     const speedLabel = ['Low', 'Medium', 'High'][this.acState.fanSpeedHeaterCooler-1];
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Fan Speed Heater -> ${speedLabel}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Fan Speed Heater -> ${speedLabel}`);
+    }
 
     if (this.acState.fanSpeedFan!==this.acState.fanSpeedHeaterCooler){
       await this.sendAcCommand();
@@ -176,7 +188,9 @@ export class AccessoryAC {
       return;
     }
     this.acState.activeFan = value as boolean;
-    this.platform.log.debug(`[${this.accessory.displayName}] Set Active Fan -> ${value as boolean}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Set Active Fan -> ${value as boolean}`);
+    }
     this.heaterCooler.updateCharacteristic(Characteristic.Active, value?1:0);
     await this.setActive(value?1:0);
   }
@@ -214,7 +228,9 @@ export class AccessoryAC {
 
   private async performSend(code: string): Promise<void> {
     const url = `http://${this.ip}/commands/ir/prontohex/${code}`;
-    this.platform.log.debug(`[${this.accessory.displayName}] Sending IR code: ${url}`);
+    if (this.debug) {
+      this.platform.log.warn(`[${this.accessory.displayName}] Sending IR code: ${url}`);
+    }
 
     try {
       const res = await fetch(url);

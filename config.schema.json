@@ -29,6 +29,11 @@
               "type": "string",
               "required": true
             },
+            "debug": {
+              "title": "Enable debug logs",
+              "type": "boolean",
+              "default": false
+            },
             "irMap": {
               "title": "IR Map",
               "type": "object",
@@ -205,6 +210,7 @@
             "devices[].name",
             "devices[].ip",
             "devices[].off",
+            "devices[].debug",
             {
               "type": "fieldset",
               "title": "IR Map",
