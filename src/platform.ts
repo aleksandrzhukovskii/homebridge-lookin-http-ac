@@ -67,7 +67,7 @@ export class Platform implements DynamicPlatformPlugin {
       //AC
       const uuidAC = this.api.hap.uuid.generate(device.name);
       const accessoryAC = new this.api.platformAccessory(device.name, uuidAC);
-      new AccessoryAC(this, accessoryAC, device.ip, sensorPoller, device.irMap, device.off);
+      new AccessoryAC(this, accessoryAC, device.ip, sensorPoller, device.irMap, device.off, device.debug, device.reqNum);
       this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessoryTemp, accessoryHum, accessoryAC]);
     }
   }

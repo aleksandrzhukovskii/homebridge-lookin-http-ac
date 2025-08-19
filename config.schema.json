@@ -24,6 +24,14 @@
               "required": true,
               "default": "127.0.0.1"
             },
+            "reqNum": {
+              "title": "Number of requests to be sent with command",
+              "required": true,
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
             "off": {
               "title": "IR off",
               "type": "string",
@@ -209,6 +217,7 @@
       "items": [
             "devices[].name",
             "devices[].ip",
+            "devices[].reqNum",
             "devices[].off",
             "devices[].debug",
             {
